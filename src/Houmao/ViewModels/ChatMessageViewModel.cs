@@ -21,6 +21,9 @@ namespace Houmao.ViewModels
         [ObservableProperty]
         private string _modelId = string.Empty;
         
+        // 用于显示的模型名称
+        public string? ModelName => IsUser ? null : (string.IsNullOrEmpty(ModelId) ? null : ModelId);
+        
         public ChatMessageViewModel()
         {
             Timestamp = DateTime.UtcNow;

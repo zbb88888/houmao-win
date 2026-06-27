@@ -2,31 +2,27 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:converters="clr-namespace:Houmao.Converters">
     
-    <!-- 转换器 -->
+    <!-- 转换器 (仅保留必要的) -->
     <converters:CountToVisibilityConverter x:Key="CountToVisibilityConverter"/>
-    <converters:ListToStringConverter x:Key="ListToStringConverter"/>
-    <converters:NullToBoolConverter x:Key="NullToBoolConverter"/>
     <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
-    <converters:UserMessageBackgroundConverter x:Key="UserMessageBackgroundConverter"/>
-    <converters:UserMessageAlignmentConverter x:Key="UserMessageAlignmentConverter"/>
     <converters:AttachmentTypeToIconConverter x:Key="AttachmentTypeToIconConverter"/>
+    <converters:DefaultToBackgroundConverter x:Key="DefaultToBackgroundConverter"/>
     
-    <!-- 通用按钮样式 -->
+    <!-- 通用按钮样式：透明底/无边框文字按钮 -->
     <Style x:Key="ButtonStyle" TargetType="Button">
-        <Setter Property="Background" Value="{DynamicResource ButtonBackground}"/>
-        <Setter Property="Foreground" Value="{DynamicResource ButtonText}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource Text}"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Padding" Value="12,6"/>
-        <Setter Property="MinWidth" Value="80"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Padding" Value="12,8"/>
+        <Setter Property="FontSize" Value="14"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="border" 
                             Background="{TemplateBinding Background}" 
-                            CornerRadius="4"
+                            CornerRadius="6"
                             Padding="{TemplateBinding Padding}">
                         <ContentPresenter HorizontalAlignment="Center" 
                                           VerticalAlignment="Center"/>
@@ -34,14 +30,13 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="border" Property="Background" 
-                                    Value="{DynamicResource ButtonHoverBackground}"/>
+                                    Value="{DynamicResource AccentMuted}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Background" 
-                                    Value="{DynamicResource ButtonPressedBackground}"/>
+                            <Setter Property="Opacity" Value="0.8"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.5"/>
+                            <Setter Property="Opacity" Value="0.4"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -49,10 +44,15 @@
         </Setter>
     </Style>
     
-    <!-- 窗口按钮样式（关闭、设置等） -->
+    <!-- 主操作按钮样式：Accent 文字色 -->
+    <Style x:Key="AccentButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+        <Setter Property="Foreground" Value="{DynamicResource Accent}"/>
+    </Style>
+    
+    <!-- 窗口按钮样式（关闭、设置等）：细线风格图标 -->
     <Style x:Key="WindowButtonStyle" TargetType="Button">
-        <Setter Property="Background" Value="{DynamicResource WindowButtonBackground}"/>
-        <Setter Property="Foreground" Value="{DynamicResource WindowButtonText}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextSecondary}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Width" Value="24"/>
         <Setter Property="Height" Value="24"/>
@@ -62,7 +62,7 @@
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="border" 
                             Background="{TemplateBinding Background}" 
-                            CornerRadius="4"
+                            CornerRadius="6"
                             Width="{TemplateBinding Width}"
                             Height="{TemplateBinding Height}">
                         <ContentPresenter HorizontalAlignment="Center" 
@@ -71,11 +71,11 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="border" Property="Background" 
-                                    Value="{DynamicResource WindowButtonHoverBackground}"/>
+                                    Value="{DynamicResource Surface}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource Text}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Background" 
-                                    Value="{DynamicResource WindowButtonPressedBackground}"/>
+                            <Setter Property="Opacity" Value="0.7"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -83,12 +83,12 @@
         </Setter>
     </Style>
     
-    <!-- 输入框样式 -->
-    <Style x:Key="InputTextBoxStyle" TargetType="TextBox">
+    <!-- 输入框样式：合并为统一的 InputStyle -->
+    <Style x:Key="InputStyle" TargetType="TextBox">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource InputText}"/>
+        <Setter Property="Foreground" Value="{DynamicResource Text}"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="CaretBrush" Value="{DynamicResource InputText}"/>
+        <Setter Property="CaretBrush" Value="{DynamicResource Accent}"/>
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
@@ -97,8 +97,8 @@
                     <Grid>
                         <!-- Placeholder -->
                         <TextBlock x:Name="placeholder" 
-                                   Text="Ask me anything..."
-                                   Foreground="{DynamicResource InputPlaceholder}"
+                                   Text="Ask anything..."
+                                   Foreground="{DynamicResource TextSecondary}"
                                    FontSize="16"
                                    VerticalAlignment="Center"
                                    Margin="0,0,0,0"
@@ -121,98 +121,32 @@
         </Setter>
     </Style>
     
-    <!-- 极简输入框样式 -->
-    <Style x:Key="MinimalInputStyle" TargetType="TextBox">
+    <!-- 密码框样式：下划线式 -->
+    <Style x:Key="PasswordBoxStyle" TargetType="PasswordBox">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource InputText}"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="CaretBrush" Value="{DynamicResource InputText}"/>
-        <Setter Property="FontSize" Value="15"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Padding" Value="8,0"/>
+        <Setter Property="Foreground" Value="{DynamicResource Text}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource Border}"/>
+        <Setter Property="BorderThickness" Value="0,0,0,0.5"/>
+        <Setter Property="Padding" Value="0,8"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="CaretBrush" Value="{DynamicResource Accent}"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="TextBox">
-                    <Grid>
-                        <!-- Placeholder -->
-                        <TextBlock x:Name="placeholder" 
-                                   Text="Ask anything..."
-                                   Foreground="{DynamicResource InputPlaceholder}"
-                                   FontSize="15"
-                                   VerticalAlignment="Center"
-                                   Margin="8,0,0,0"
-                                   IsHitTestVisible="False"
-                                   Visibility="Collapsed"/>
-                        
-                        <!-- 文本框 -->
+                <ControlTemplate TargetType="PasswordBox">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
                         <ScrollViewer x:Name="PART_ContentHost" 
                                       Focusable="False"
                                       HorizontalScrollBarVisibility="Hidden"
-                                      VerticalScrollBarVisibility="Hidden"
-                                      Margin="{TemplateBinding Padding}"/>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="Text" Value="">
-                            <Setter TargetName="placeholder" Property="Visibility" Value="Visible"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    
-    <!-- 密码框样式 -->
-    <Style x:Key="PasswordBoxStyle" TargetType="PasswordBox">
-        <Setter Property="Background" Value="{DynamicResource InputBackground}"/>
-        <Setter Property="Foreground" Value="{DynamicResource InputText}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource Separator}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Padding" Value="8,4"/>
-        <Setter Property="FontSize" Value="12"/>
-    </Style>
-    
-    <!-- DataGrid 样式 -->
-    <Style x:Key="DataGridStyle" TargetType="DataGrid">
-        <Setter Property="Background" Value="{DynamicResource WindowBackground}"/>
-        <Setter Property="Foreground" Value="{DynamicResource MessageText}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource Separator}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="RowBackground" Value="{DynamicResource WindowBackground}"/>
-        <Setter Property="AlternatingRowBackground" Value="{DynamicResource StatusBarBackground}"/>
-        <Setter Property="GridLinesVisibility" Value="Horizontal"/>
-        <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource Separator}"/>
-    </Style>
-    
-    <!-- TabControl 样式 -->
-    <Style x:Key="TabControlStyle" TargetType="TabControl">
-        <Setter Property="Background" Value="{DynamicResource WindowBackground}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource Separator}"/>
-        <Setter Property="BorderThickness" Value="0"/>
-    </Style>
-    
-    <Style x:Key="TabItemStyle" TargetType="TabItem">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource MessageText}"/>
-        <Setter Property="Padding" Value="12,8"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="TabItem">
-                    <Border x:Name="border" 
-                            Background="{TemplateBinding Background}" 
-                            Padding="{TemplateBinding Padding}"
-                            BorderThickness="0,0,0,2"
-                            BorderBrush="Transparent">
-                        <ContentPresenter/>
+                                      VerticalScrollBarVisibility="Hidden"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
+                        <Trigger Property="IsFocused" Value="True">
                             <Setter TargetName="border" Property="BorderBrush" 
-                                    Value="{DynamicResource ButtonBackground}"/>
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" 
-                                    Value="{DynamicResource WindowButtonHoverBackground}"/>
+                                    Value="{DynamicResource Accent}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -220,21 +154,96 @@
         </Setter>
     </Style>
     
-    <!-- CheckBox 样式 -->
-    <Style x:Key="CheckBoxStyle" TargetType="CheckBox">
-        <Setter Property="Foreground" Value="{DynamicResource MessageText}"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    <!-- ToggleSwitch 样式：极简开关 -->
+    <Style x:Key="ToggleSwitchStyle" TargetType="ToggleButton">
+        <Setter Property="Background" Value="{DynamicResource TextSecondary}"/>
+        <Setter Property="Foreground" Value="{DynamicResource Bg}"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="22"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid>
+                        <!-- 轨道 -->
+                        <Border x:Name="track"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="11"
+                                Width="40"
+                                Height="22"
+                                Opacity="0.3"/>
+                        
+                        <!-- 滑块 -->
+                        <Ellipse x:Name="thumb"
+                                 Fill="{DynamicResource Text}"
+                                 Width="16"
+                                 Height="16"
+                                 HorizontalAlignment="Left"
+                                 Margin="3,0,0,0"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="track" Property="Background" 
+                                    Value="{DynamicResource Accent}"/>
+                            <Setter TargetName="track" Property="Opacity" Value="0.3"/>
+                            <Setter TargetName="thumb" Property="Fill" 
+                                    Value="{DynamicResource Accent}"/>
+                            <Setter TargetName="thumb" Property="HorizontalAlignment" 
+                                    Value="Right"/>
+                            <Setter TargetName="thumb" Property="Margin" 
+                                    Value="0,0,3,0"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="track" Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
     
-    <!-- ComboBox 样式 -->
+    <!-- ScrollBar 样式：6px、overlay -->
+    <Style x:Key="ScrollBarStyle" TargetType="ScrollBar">
+        <Setter Property="Width" Value="6"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ScrollBar">
+                    <Grid>
+                        <Track x:Name="PART_Track" 
+                               IsDirectionReversed="True">
+                            <Track.Thumb>
+                                <Thumb>
+                                    <Thumb.Style>
+                                        <Style TargetType="Thumb">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="Thumb">
+                                                        <Border x:Name="thumb"
+                                                                Background="{DynamicResource TextSecondary}"
+                                                                CornerRadius="3"
+                                                                Opacity="0.3"
+                                                                Margin="0,2"/>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Thumb.Style>
+                                </Thumb>
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- ComboBox 样式：极简 -->
     <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
-        <Setter Property="Background" Value="{DynamicResource InputBackground}"/>
-        <Setter Property="Foreground" Value="{DynamicResource InputText}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource Separator}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Padding" Value="8,4"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource Text}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource Border}"/>
+        <Setter Property="BorderThickness" Value="0,0,0,0.5"/>
+        <Setter Property="Padding" Value="0,8"/>
+        <Setter Property="FontSize" Value="14"/>
     </Style>
     
 </ResourceDictionary>

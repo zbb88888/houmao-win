@@ -136,17 +136,17 @@ namespace Houmao.Views.Controls
             
             // 代码块背景
             var border = new Border();
-            border.Background = (Brush)Application.Current.TryFindResource("CodeBlockBackground");
-            border.BorderBrush = (Brush)Application.Current.TryFindResource("CodeBlockBorder");
-            border.BorderThickness = new Thickness(1);
-            border.CornerRadius = new CornerRadius(4);
+            border.Background = (Brush)Application.Current.TryFindResource("Surface");
+            border.BorderBrush = (Brush)Application.Current.TryFindResource("Border");
+            border.BorderThickness = new Thickness(0.5);
+            border.CornerRadius = new CornerRadius(6);
             border.Padding = new Thickness(12, 8, 12, 8);
             
             // 代码文本
             var codeText = new System.Windows.Documents.Run();
             codeText.FontFamily = new FontFamily("Consolas");
             codeText.FontSize = 13;
-            codeText.Foreground = (Brush)Application.Current.TryFindResource("CodeBlockText");
+            codeText.Foreground = (Brush)Application.Current.TryFindResource("Text");
             
             // 获取代码内容
             if (code is FencedCodeBlock fencedCode)
@@ -235,7 +235,7 @@ namespace Houmao.Views.Controls
             paragraph.Margin = new Thickness(0, 12, 0, 12);
             
             var line = new System.Windows.Documents.Run("────────────────────────────────────────");
-            line.Foreground = (Brush)Application.Current.TryFindResource("Separator");
+            line.Foreground = (Brush)Application.Current.TryFindResource("Border");
             
             paragraph.Inlines.Add(line);
             Document.Blocks.Add(paragraph);
@@ -247,8 +247,8 @@ namespace Houmao.Views.Controls
             section.Margin = new Thickness(0, 0, 0, 12);
             
             var border = new Border();
-            border.Background = (Brush)Application.Current.TryFindResource("StatusBarBackground");
-            border.BorderBrush = (Brush)Application.Current.TryFindResource("ButtonBackground");
+            border.Background = (Brush)Application.Current.TryFindResource("Surface");
+            border.BorderBrush = (Brush)Application.Current.TryFindResource("Accent");
             border.BorderThickness = new Thickness(4, 0, 0, 0);
             border.Padding = new Thickness(12, 8, 12, 8);
             
@@ -311,8 +311,8 @@ namespace Houmao.Views.Controls
                 case CodeInline code:
                     var codeRun = new System.Windows.Documents.Run(code.Content);
                     codeRun.FontFamily = new FontFamily("Consolas");
-                    codeRun.Background = (Brush)Application.Current.TryFindResource("CodeBlockBackground");
-                    codeRun.Foreground = (Brush)Application.Current.TryFindResource("CodeBlockText");
+                    codeRun.Background = (Brush)Application.Current.TryFindResource("Surface");
+                    codeRun.Foreground = (Brush)Application.Current.TryFindResource("Text");
                     paragraph.Inlines.Add(codeRun);
                     break;
                 
@@ -326,7 +326,7 @@ namespace Houmao.Views.Controls
                         }
                     }
                     
-                    linkRun.Foreground = (Brush)Application.Current.TryFindResource("ButtonBackground");
+                    linkRun.Foreground = (Brush)Application.Current.TryFindResource("Accent");
                     linkRun.TextDecorations = TextDecorations.Underline;
                     linkRun.Cursor = System.Windows.Input.Cursors.Hand;
                     

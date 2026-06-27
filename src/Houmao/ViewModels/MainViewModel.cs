@@ -49,6 +49,9 @@ namespace Houmao.ViewModels
         [ObservableProperty]
         private ObservableCollection<ChatMessageViewModel> _messages = new();
         
+        // 是否有消息
+        public bool HasMessages => Messages.Count > 0;
+        
         public MainViewModel(
             ILogger<MainViewModel> logger,
             IAiClient aiClient,
@@ -145,7 +148,12 @@ namespace Houmao.ViewModels
                 _conversationHistory.Add(assistantMessage);
                 
                 // 添加助手消息到显示列表
-                Messages.Add(new ChatMessageViewModel(assistantMessage, false));
+                var assistantViewModel = new ChatMessageViewModel(assistantMessage, false)
+                {
+                    ModelId = resolvedModel.ModelId
+                };
+                Messages.Add(assistantViewModel);
+                OnPropertyChanged(nameof(HasMessages));
                 
                 // 限制历史长度
                 if (_conversationHistory.Count > 20)
@@ -190,6 +198,7 @@ namespace Houmao.ViewModels
             Messages.Clear();
             MessageCount = 0;
             StatusText = "Conversation cleared";
+            OnPropertyChanged(nameof(HasMessages));
         }
         
         [RelayCommand]

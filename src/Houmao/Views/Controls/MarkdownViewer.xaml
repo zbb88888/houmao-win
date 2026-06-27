@@ -11,7 +11,7 @@
                                 IsSelectionEnabled="True">
         <FlowDocument x:Name="Document"
                       Background="Transparent"
-                      Foreground="{DynamicResource MessageText}"
+                      Foreground="{DynamicResource Text}"
                       FontFamily="Segoe UI"
                       FontSize="14">
             <!-- 内容将通过代码动态生成 -->

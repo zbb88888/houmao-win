@@ -21,6 +21,17 @@ namespace Houmao.Models
                 : new List<string>(value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
         }
         
+        // 用于列表显示的模型摘要
+        public string ModelsSummary
+        {
+            get
+            {
+                if (Models.Count == 0) return "No models";
+                if (Models.Count <= 2) return string.Join(", ", Models);
+                return $"{Models[0]}, {Models[1]}, +{Models.Count - 2}";
+            }
+        }
+        
         // 解析模型引用
         public ResolvedModel? ResolveModel(string? mention)
         {

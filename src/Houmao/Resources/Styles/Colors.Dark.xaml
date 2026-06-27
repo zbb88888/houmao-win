@@ -1,108 +1,34 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
-    <!-- 深色主题颜色 -->
+    <!-- Dark 主题 Token -->
     
     <!-- 窗口背景 -->
-    <Color x:Key="WindowBackgroundColor">#1E1E1E</Color>
-    <SolidColorBrush x:Key="WindowBackground" Color="{StaticResource WindowBackgroundColor}"/>
+    <Color x:Key="BgColor">#1C1C1E</Color>
+    <SolidColorBrush x:Key="Bg" Color="{StaticResource BgColor}"/>
     
-    <!-- 窗口边框 -->
-    <Color x:Key="WindowBorderColor">#333333</Color>
-    <SolidColorBrush x:Key="WindowBorder" Color="{StaticResource WindowBorderColor}"/>
+    <!-- 悬浮/输入区 -->
+    <Color x:Key="SurfaceColor">#262628</Color>
+    <SolidColorBrush x:Key="Surface" Color="{StaticResource SurfaceColor}"/>
     
-    <!-- 标题栏 -->
-    <Color x:Key="TitleBarBackgroundColor">#2D2D2D</Color>
-    <SolidColorBrush x:Key="TitleBarBackground" Color="{StaticResource TitleBarBackgroundColor}"/>
+    <!-- 细描边 (8% 白色) -->
+    <Color x:Key="BorderColor">#14FFFFFF</Color>
+    <SolidColorBrush x:Key="Border" Color="{StaticResource BorderColor}"/>
     
-    <Color x:Key="TitleBarTextColor">#FFFFFF</Color>
-    <SolidColorBrush x:Key="TitleBarText" Color="{StaticResource TitleBarTextColor}"/>
+    <!-- 主文本 -->
+    <Color x:Key="TextColor">#F2F2F2</Color>
+    <SolidColorBrush x:Key="Text" Color="{StaticResource TextColor}"/>
     
-    <!-- 输入框 -->
-    <Color x:Key="InputBackgroundColor">#2D2D2D</Color>
-    <SolidColorBrush x:Key="InputBackground" Color="{StaticResource InputBackgroundColor}"/>
+    <!-- 次要文本/placeholder/时间戳 -->
+    <Color x:Key="TextSecondaryColor">#8E8E93</Color>
+    <SolidColorBrush x:Key="TextSecondary" Color="{StaticResource TextSecondaryColor}"/>
     
-    <Color x:Key="InputBorderColor">#404040</Color>
-    <SolidColorBrush x:Key="InputBorder" Color="{StaticResource InputBorderColor}"/>
+    <!-- 唯一强调色 (光标、选中、默认标记、链接) -->
+    <Color x:Key="AccentColor">#0A84FF</Color>
+    <SolidColorBrush x:Key="Accent" Color="{StaticResource AccentColor}"/>
     
-    <Color x:Key="InputTextColor">#FFFFFF</Color>
-    <SolidColorBrush x:Key="InputText" Color="{StaticResource InputTextColor}"/>
-    
-    <Color x:Key="InputPlaceholderColor">#888888</Color>
-    <SolidColorBrush x:Key="InputPlaceholder" Color="{StaticResource InputPlaceholderColor}"/>
-    
-    <!-- 状态栏 -->
-    <Color x:Key="StatusBarBackgroundColor">#2D2D2D</Color>
-    <SolidColorBrush x:Key="StatusBarBackground" Color="{StaticResource StatusBarBackgroundColor}"/>
-    
-    <Color x:Key="StatusBarTextColor">#AAAAAA</Color>
-    <SolidColorBrush x:Key="StatusBarText" Color="{StaticResource StatusBarTextColor}"/>
-    
-    <!-- 附件 -->
-    <Color x:Key="AttachmentBackgroundColor">#1A237E</Color>
-    <SolidColorBrush x:Key="AttachmentBackground" Color="{StaticResource AttachmentBackgroundColor}"/>
-    
-    <Color x:Key="AttachmentTextColor">#82B1FF</Color>
-    <SolidColorBrush x:Key="AttachmentText" Color="{StaticResource AttachmentTextColor}"/>
-    
-    <!-- 消息气泡 -->
-    <Color x:Key="UserMessageBackgroundColor">#1A237E</Color>
-    <SolidColorBrush x:Key="UserMessageBackground" Color="{StaticResource UserMessageBackgroundColor}"/>
-    
-    <Color x:Key="AssistantMessageBackgroundColor">#2D2D2D</Color>
-    <SolidColorBrush x:Key="AssistantMessageBackground" Color="{StaticResource AssistantMessageBackgroundColor}"/>
-    
-    <Color x:Key="MessageTextColor">#FFFFFF</Color>
-    <SolidColorBrush x:Key="MessageText" Color="{StaticResource MessageTextColor}"/>
-    
-    <!-- 按钮 -->
-    <Color x:Key="ButtonBackgroundColor">#1976D2</Color>
-    <SolidColorBrush x:Key="ButtonBackground" Color="{StaticResource ButtonBackgroundColor}"/>
-    
-    <Color x:Key="ButtonTextColor">#FFFFFF</Color>
-    <SolidColorBrush x:Key="ButtonText" Color="{StaticResource ButtonTextColor}"/>
-    
-    <Color x:Key="ButtonHoverBackgroundColor">#1565C0</Color>
-    <SolidColorBrush x:Key="ButtonHoverBackground" Color="{StaticResource ButtonHoverBackgroundColor}"/>
-    
-    <Color x:Key="ButtonPressedBackgroundColor">#0D47A1</Color>
-    <SolidColorBrush x:Key="ButtonPressedBackground" Color="{StaticResource ButtonPressedBackgroundColor}"/>
-    
-    <!-- 窗口按钮 -->
-    <Color x:Key="WindowButtonBackgroundColor">Transparent</Color>
-    <SolidColorBrush x:Key="WindowButtonBackground" Color="{StaticResource WindowButtonBackgroundColor}"/>
-    
-    <Color x:Key="WindowButtonTextColor">#AAAAAA</Color>
-    <SolidColorBrush x:Key="WindowButtonText" Color="{StaticResource WindowButtonTextColor}"/>
-    
-    <Color x:Key="WindowButtonHoverBackgroundColor">#404040</Color>
-    <SolidColorBrush x:Key="WindowButtonHoverBackground" Color="{StaticResource WindowButtonHoverBackgroundColor}"/>
-    
-    <Color x:Key="WindowButtonPressedBackgroundColor">#555555</Color>
-    <SolidColorBrush x:Key="WindowButtonPressedBackground" Color="{StaticResource WindowButtonPressedBackgroundColor}"/>
-    
-    <!-- 分隔线 -->
-    <Color x:Key="SeparatorColor">#404040</Color>
-    <SolidColorBrush x:Key="Separator" Color="{StaticResource SeparatorColor}"/>
-    
-    <!-- 滚动条 -->
-    <Color x:Key="ScrollBarBackgroundColor">#1E1E1E</Color>
-    <SolidColorBrush x:Key="ScrollBarBackground" Color="{StaticResource ScrollBarBackgroundColor}"/>
-    
-    <Color x:Key="ScrollBarThumbColor">#555555</Color>
-    <SolidColorBrush x:Key="ScrollBarThumb" Color="{StaticResource ScrollBarThumbColor}"/>
-    
-    <Color x:Key="ScrollBarThumbHoverColor">#777777</Color>
-    <SolidColorBrush x:Key="ScrollBarThumbHover" Color="{StaticResource ScrollBarThumbHoverColor}"/>
-    
-    <!-- 代码块 -->
-    <Color x:Key="CodeBlockBackgroundColor">#2D2D2D</Color>
-    <SolidColorBrush x:Key="CodeBlockBackground" Color="{StaticResource CodeBlockBackgroundColor}"/>
-    
-    <Color x:Key="CodeBlockTextColor">#FFFFFF</Color>
-    <SolidColorBrush x:Key="CodeBlockText" Color="{StaticResource CodeBlockTextColor}"/>
-    
-    <Color x:Key="CodeBlockBorderColor">#404040</Color>
-    <SolidColorBrush x:Key="CodeBlockBorder" Color="{StaticResource CodeBlockBorderColor}"/>
+    <!-- 强调色弱化背景 (14% 透明度) -->
+    <Color x:Key="AccentMutedColor">#240A84FF</Color>
+    <SolidColorBrush x:Key="AccentMuted" Color="{StaticResource AccentMutedColor}"/>
     
 </ResourceDictionary>

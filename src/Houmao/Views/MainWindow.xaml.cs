@@ -29,9 +29,9 @@ namespace Houmao.Views
             
             _viewModel.PropertyChanged += (s, e) =>
             {
-                if (e.PropertyName == nameof(MainViewModel.InputText))
+                if (e.PropertyName == nameof(MainViewModel.HasMessages))
                 {
-                    UpdateSendButtonVisibility();
+                    UpdateSeparatorVisibility();
                 }
             };
             
@@ -45,6 +45,22 @@ namespace Houmao.Views
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            // 应用毛玻璃效果和圆角
+            var hwnd = new System.Windows.Interop.WindowInteropHelper(this).Handle;
+            
+            // 检测 Windows 版本
+            if (Environment.OSVersion.Version.Major >= 10 && Environment.OSVersion.Version.Build >= 22000)
+            {
+                // Windows 11
+                DwmApi.SetAcrylic(hwnd);
+                DwmApi.SetRoundCorners(hwnd);
+            }
+            else if (Environment.OSVersion.Version.Major >= 10)
+            {
+                // Windows 10
+                DwmApi.SetAcrylicWin10(hwnd, 0x991C1C1E);
+            }
+            
             InputTextBox.Focus();
             WpfInput.Keyboard.Focus(InputTextBox);
         }
@@ -115,21 +131,11 @@ namespace Houmao.Views
             }
         }
 
-        private void AttachButton_Click(object sender, RoutedEventArgs e)
+        private void UpdateSeparatorVisibility()
         {
-            _viewModel.AttachFileCommand.Execute(null);
-        }
-
-        private void SendButton_Click(object sender, RoutedEventArgs e)
-        {
-            _viewModel.SubmitCommand.Execute(null);
-        }
-
-        private void UpdateSendButtonVisibility()
-        {
-            SendButton.Visibility = string.IsNullOrWhiteSpace(_viewModel.InputText) 
-                ? Visibility.Collapsed 
-                : Visibility.Visible;
+            Separator.Visibility = _viewModel.HasMessages 
+                ? Visibility.Visible 
+                : Visibility.Collapsed;
         }
         
         private void OnPaste(object sender, ExecutedRoutedEventArgs e)
@@ -191,25 +197,19 @@ namespace Houmao.Views
             {
                 Dispatcher.Invoke(() =>
                 {
-                    var logPath = Path.Combine(Path.GetTempPath(), "houmao_hotkey.log");
-                    File.AppendAllText(logPath, $"[{DateTime.Now}] Toggle! IsVisible={IsVisible}, Left={Left}, Top={Top}\n");
-                    
                     if (IsVisible)
                     {
                         Hide();
-                        File.AppendAllText(logPath, $"[{DateTime.Now}] Hidden\n");
                     }
                     else
                     {
                         ShowAndActivate();
-                        File.AppendAllText(logPath, $"[{DateTime.Now}] Shown\n");
                     }
                 });
             }
             catch (Exception ex)
             {
-                var logPath = Path.Combine(Path.GetTempPath(), "houmao_hotkey.log");
-                File.AppendAllText(logPath, $"[{DateTime.Now}] Error: {ex}\n");
+                // Log error silently
             }
         }
 
@@ -236,12 +236,12 @@ namespace Houmao.Views
                 var workingAreaSize = transform.Transform(new System.Windows.Point(workingArea.Width, workingArea.Height));
                 
                 Left = (workingAreaSize.X - Width) / 2 + workingAreaTopLeft.X;
-                Top = (workingAreaSize.Y - Height) / 2 + workingAreaTopLeft.Y;
+                Top = (workingAreaSize.Y - ActualHeight) / 2 + workingAreaTopLeft.Y;
             }
             else
             {
                 Left = (workingArea.Width - Width) / 2 + workingArea.Left;
-                Top = (workingArea.Height - Height) / 2 + workingArea.Top;
+                Top = (workingArea.Height - ActualHeight) / 2 + workingArea.Top;
             }
         }
 
