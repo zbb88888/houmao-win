@@ -262,7 +262,6 @@
                                    Style="{StaticResource ScrollBarStyle}"
                                    ViewportSize="{TemplateBinding ViewportHeight}"
                                    Maximum="{TemplateBinding ScrollableHeight}"
-                                   Value="{Binding VerticalOffset, RelativeSource={RelativeSource TemplatedParent}}"
                                    Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
                         
                         <!-- 水平滚动条 overlay -->
@@ -274,7 +273,6 @@
                                    Style="{StaticResource ScrollBarStyle}"
                                    ViewportSize="{TemplateBinding ViewportWidth}"
                                    Maximum="{TemplateBinding ScrollableWidth}"
-                                   Value="{Binding HorizontalOffset, RelativeSource={RelativeSource TemplatedParent}}"
                                    Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
