@@ -1,0 +1,188 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\12205\\Documents\\GitHub\\houmao-win\\tests\\Houmao.Tests\\Houmao.Tests.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\12205\\Documents\\GitHub\\houmao-win\\src\\Houmao\\Houmao.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\12205\\Documents\\GitHub\\houmao-win\\src\\Houmao\\Houmao.csproj",
+        "projectName": "Houmao",
+        "projectPath": "C:\\Users\\12205\\Documents\\GitHub\\houmao-win\\src\\Houmao\\Houmao.csproj",
+        "packagesPath": "C:\\Users\\12205\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\12205\\Documents\\GitHub\\houmao-win\\src\\Houmao\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\12205\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0-windows"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0-windows7.0": {
+            "targetAlias": "net9.0-windows",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0-windows7.0": {
+          "targetAlias": "net9.0-windows",
+          "dependencies": {
+            "CommunityToolkit.Mvvm": {
+              "target": "Package",
+              "version": "[8.*, )"
+            },
+            "H.NotifyIcon.Wpf": {
+              "target": "Package",
+              "version": "[2.*, )"
+            },
+            "Markdig": {
+              "target": "Package",
+              "version": "[0.40.*, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[9.*, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[9.*, )"
+            },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[9.*, )"
+            },
+            "Microsoft.Extensions.Logging.Debug": {
+              "target": "Package",
+              "version": "[9.*, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.315/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\12205\\Documents\\GitHub\\houmao-win\\tests\\Houmao.Tests\\Houmao.Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\12205\\Documents\\GitHub\\houmao-win\\tests\\Houmao.Tests\\Houmao.Tests.csproj",
+        "projectName": "Houmao.Tests",
+        "projectPath": "C:\\Users\\12205\\Documents\\GitHub\\houmao-win\\tests\\Houmao.Tests\\Houmao.Tests.csproj",
+        "packagesPath": "C:\\Users\\12205\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\12205\\Documents\\GitHub\\houmao-win\\tests\\Houmao.Tests\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\12205\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0-windows"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0-windows7.0": {
+            "targetAlias": "net9.0-windows",
+            "projectReferences": {
+              "C:\\Users\\12205\\Documents\\GitHub\\houmao-win\\src\\Houmao\\Houmao.csproj": {
+                "projectPath": "C:\\Users\\12205\\Documents\\GitHub\\houmao-win\\src\\Houmao\\Houmao.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0-windows7.0": {
+          "targetAlias": "net9.0-windows",
+          "dependencies": {
+            "FluentAssertions": {
+              "target": "Package",
+              "version": "[6.*, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.*, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.*, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.*, )"
+            },
+            "xunit.runner.visualstudio": {
+              "target": "Package",
+              "version": "[2.*, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WPF": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.315/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
