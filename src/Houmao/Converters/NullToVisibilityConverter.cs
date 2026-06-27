@@ -9,7 +9,14 @@ namespace Houmao.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null ? Visibility.Visible : Visibility.Collapsed;
+            bool isInverse = parameter is string p && p.Equals("Inverse", StringComparison.OrdinalIgnoreCase);
+            
+            bool isNull = value == null;
+            
+            if (isInverse)
+                return isNull ? Visibility.Visible : Visibility.Collapsed;
+            
+            return isNull ? Visibility.Collapsed : Visibility.Visible;
         }
         
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

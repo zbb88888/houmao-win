@@ -61,7 +61,7 @@
                          KeyDown="InputTextBox_KeyDown"/>
             </Grid>
             
-            <!-- 分隔线（仅在有内容时显示） -->
+            <!-- 分隔线（有内容时显示） -->
             <Border x:Name="Separator"
                     Grid.Row="1"
                     Height="0.5"
@@ -78,14 +78,11 @@
                                        VerticalAlignment="Top"
                                        Visibility="{Binding Attachments.Count, Converter={StaticResource CountToVisibilityConverter}}"/>
                 
-                <!-- 面板切换区域 -->
+                <!-- History/Help 面板（CurrentPanel != null 时显示） -->
                 <ContentControl Content="{Binding CurrentPanel}"
-                                Margin="0,12,0,0">
+                                Margin="0,12,0,0"
+                                Visibility="{Binding CurrentPanel, Converter={StaticResource NullToVisibilityConverter}}">
                     <ContentControl.Resources>
-                        <!-- ChatPanel 作为默认内容 -->
-                        <DataTemplate DataType="{x:Type vm:ChatPanelViewModel}">
-                            <views:ChatPanel/>
-                        </DataTemplate>
                         <DataTemplate DataType="{x:Type vm:HistoryPanelViewModel}">
                             <views:HistoryPanel/>
                         </DataTemplate>
@@ -95,38 +92,27 @@
                     </ContentControl.Resources>
                 </ContentControl>
                 
-                <!-- 默认消息列表（当 CurrentPanel 为 null 时显示） -->
-                <ScrollViewer x:Name="MessageScroller"
-                              VerticalScrollBarVisibility="Auto"
+                <!-- Chat 消息列表（CurrentPanel == null 时显示） -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
                               Padding="16,0,16,16"
                               Visibility="{Binding CurrentPanel, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=Inverse}">
-                    <views:ChatPanel x:Name="ChatPanel"
-                                     DataContext="{Binding}"/>
+                    <views:ChatPanel DataContext="{Binding}"/>
                 </ScrollViewer>
                 
-                <!-- 加载态提示 -->
-                <Grid Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <StackPanel HorizontalAlignment="Center" 
-                                VerticalAlignment="Center"
-                                Orientation="Horizontal">
-                        <TextBlock Text="A" 
-                                   FontSize="13" 
-                                   FontWeight="SemiBold"
-                                   Foreground="{DynamicResource Accent}"
-                                   Margin="0,0,12,0"/>
-                        <TextBlock Text="Thinking…" 
-                                   FontSize="14"
-                                   Foreground="{DynamicResource TextSecondary}"/>
-                    </StackPanel>
-                    
-                    <!-- 右上角 Esc 取消提示 -->
-                    <TextBlock Text="Esc 取消" 
-                               FontSize="12"
-                               Foreground="{DynamicResource TextSecondary}"
-                               HorizontalAlignment="Right"
-                               VerticalAlignment="Top"
-                               Margin="0,8,16,0"/>
-                </Grid>
+                <!-- 加载态提示（内联显示） -->
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Left"
+                            Margin="16,12,16,0"
+                            Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <TextBlock Text="A" 
+                               FontSize="13" 
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource Accent}"
+                               Margin="0,0,12,0"/>
+                    <TextBlock Text="Thinking…" 
+                               FontSize="14"
+                               Foreground="{DynamicResource TextSecondary}"/>
+                </StackPanel>
             </Grid>
         </Grid>
     </Border>
