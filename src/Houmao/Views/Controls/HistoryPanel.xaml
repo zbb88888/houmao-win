@@ -4,7 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             Background="{DynamicResource WindowBackground}">
+             Background="Transparent">
     
     <Grid>
         <Grid.RowDefinitions>
@@ -14,43 +14,45 @@
         </Grid.RowDefinitions>
         
         <!-- 标题栏 -->
-        <Border Grid.Row="0" 
-                Background="{DynamicResource StatusBarBackground}"
-                Padding="12,8">
-            <DockPanel>
-                <TextBlock Text="History" 
-                           FontSize="16" 
+        <Grid Grid.Row="0" Margin="16,12,16,12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <TextBlock Text="HISTORY" 
+                           FontSize="12" 
                            FontWeight="SemiBold"
-                           Foreground="{DynamicResource TitleBarText}"
+                           Foreground="{DynamicResource TextSecondary}"
                            VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding TotalCount, StringFormat='  ({0} records)'}" 
+                           Foreground="{DynamicResource TextSecondary}"
+                           FontSize="12"
+                           VerticalAlignment="Center"
+                           Margin="8,0,0,0"/>
+            </StackPanel>
+            
+            <StackPanel Grid.Column="1" 
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Right">
+                <Button Content="Refresh" 
+                        Command="{Binding RefreshCommand}"
+                        Style="{DynamicResource ButtonStyle}"
+                        FontSize="12"
+                        Padding="8,4"
+                        Margin="0,0,8,0"/>
                 
-                <StackPanel DockPanel.Dock="Right" 
-                            Orientation="Horizontal" 
-                            HorizontalAlignment="Right">
-                    <TextBlock Text="{Binding TotalCount, StringFormat='{}{0} records'}" 
-                               Foreground="{DynamicResource StatusBarText}"
-                               FontSize="12"
-                               VerticalAlignment="Center"
-                               Margin="0,0,12,0"/>
-                    
-                    <Button Content="Refresh" 
-                            Command="{Binding RefreshCommand}"
-                            Style="{DynamicResource WindowButtonStyle}"
-                            Width="60"
-                            Height="24"
-                            Margin="0,0,8,0"/>
-                    
-                    <Button Content="Clear All" 
-                            Command="{Binding ClearAllCommand}"
-                            Style="{DynamicResource WindowButtonStyle}"
-                            Width="60"
-                            Height="24"/>
-                </StackPanel>
-            </DockPanel>
-        </Border>
+                <Button Content="Clear all" 
+                        Command="{Binding ClearAllCommand}"
+                        Style="{DynamicResource ButtonStyle}"
+                        FontSize="12"
+                        Padding="8,4"/>
+            </StackPanel>
+        </Grid>
         
         <!-- 历史列表 -->
-        <Border Grid.Row="1" Padding="12,0">
+        <Border Grid.Row="1" Padding="16,0">
             <ListView ItemsSource="{Binding Records}"
                       SelectionMode="Single"
                       VirtualizingPanel.IsVirtualizing="True"
@@ -59,10 +61,11 @@
                       ScrollViewer.ScrollChanged="ListView_ScrollChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Border Background="{DynamicResource StatusBarBackground}"
-                                CornerRadius="4"
-                                Padding="12,8"
-                                Margin="0,0,0,6">
+                        <Border Background="Transparent"
+                                BorderBrush="{DynamicResource Border}"
+                                BorderThickness="0,0,0,0.5"
+                                Padding="0,8,0,8"
+                                Margin="0,0,0,0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -71,26 +74,26 @@
                                 
                                 <StackPanel Grid.Column="0">
                                     <TextBlock Text="{Binding Summary}" 
-                                               Foreground="{DynamicResource MessageText}"
+                                               Foreground="{DynamicResource Text}"
                                                TextTrimming="CharacterEllipsis"
                                                MaxHeight="40"
                                                TextWrapping="Wrap"/>
                                     
                                     <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
                                         <TextBlock Text="{Binding ApplicationName}" 
-                                                   Foreground="{DynamicResource StatusBarText}"
+                                                   Foreground="{DynamicResource TextSecondary}"
                                                    FontSize="11"
                                                    Margin="0,0,12,0"/>
                                         
                                         <TextBlock Text="{Binding TimestampDisplay}" 
-                                                   Foreground="{DynamicResource StatusBarText}"
+                                                   Foreground="{DynamicResource TextSecondary}"
                                                    FontSize="11"/>
                                     </StackPanel>
                                 </StackPanel>
                                 
                                 <TextBlock Grid.Column="1" 
                                            Text="{Binding ProviderName}" 
-                                           Foreground="{DynamicResource ButtonBackground}"
+                                           Foreground="{DynamicResource Accent}"
                                            FontSize="11"
                                            VerticalAlignment="Center"/>
                             </Grid>
@@ -112,15 +115,14 @@
         
         <!-- 加载更多 -->
         <Border Grid.Row="2" 
-                Background="{DynamicResource StatusBarBackground}"
-                Padding="12,8"
+                Padding="16,12"
                 Visibility="{Binding HasMore, Converter={StaticResource BoolToVisibilityConverter}}">
-            <Button Content="Load More" 
+            <Button Content="Load more" 
                     Command="{Binding LoadMoreCommand}"
-                    Style="{DynamicResource WindowButtonStyle}"
+                    Style="{DynamicResource ButtonStyle}"
                     HorizontalAlignment="Center"
-                    Width="100"
-                    Height="24"/>
+                    FontSize="12"
+                    Padding="12,6"/>
         </Border>
         
         <!-- 加载指示器 -->
@@ -128,7 +130,7 @@
                 Background="#80000000"
                 Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}">
             <TextBlock Text="Loading..." 
-                       Foreground="White"
+                       Foreground="{DynamicResource TextSecondary}"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"/>
         </Border>

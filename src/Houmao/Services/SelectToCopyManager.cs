@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
@@ -20,18 +19,16 @@ namespace Houmao.Services
         private User32.POINT _mouseDownPoint;
         private readonly int _dragThreshold;
         
-        private readonly string _logPath = Path.Combine(Path.GetTempPath(), "houmao_select.log");
-        
         public SelectToCopyManager(ILogger<SelectToCopyManager> logger, IAppSettings settings)
         {
             _logger = logger;
             _settings = settings;
             
-            File.WriteAllText(_logPath, $"[{DateTime.Now}] SelectToCopyManager created. Enabled={_settings.SelectToCopyEnabled}\n");
+            _logger.LogDebug("SelectToCopyManager created. Enabled={Enabled}", _settings.SelectToCopyEnabled);
             
             // 获取系统拖拽阈值
             _dragThreshold = User32.GetSystemMetrics(User32.SM_CXDRAG);
-            File.AppendAllText(_logPath, $"[{DateTime.Now}] Drag threshold: {_dragThreshold}\n");
+            _logger.LogDebug("Drag threshold: {Threshold}", _dragThreshold);
             
             // 订阅设置变化
             _settings.SettingsChanged += Settings_SettingsChanged;
@@ -144,8 +141,6 @@ namespace Houmao.Services
                             var dy = hookStruct.pt.Y - _mouseDownPoint.Y;
                             var distance = Math.Sqrt(dx * dx + dy * dy);
                             
-                            File.AppendAllText(_logPath, $"[{DateTime.Now}] Up: {hookStruct.pt.X},{hookStruct.pt.Y} Down: {_mouseDownPoint.X},{_mouseDownPoint.Y} dist={distance:F0}\n");
-                            
                             if (distance > _dragThreshold)
                             {
                                 PerformCopy();
@@ -167,11 +162,11 @@ namespace Houmao.Services
                 {
                     Thread.Sleep(150); // 等待选择完成
                     SendCopyCommand();
-                    File.AppendAllText(_logPath, $"[{DateTime.Now}] Copy command sent on thread\n");
+                    _logger.LogDebug("Copy command sent");
                 }
                 catch (Exception ex)
                 {
-                    File.AppendAllText(_logPath, $"[{DateTime.Now}] Copy error: {ex.Message}\n");
+                    _logger.LogError(ex, "Copy error");
                 }
             });
             copyThread.IsBackground = true;

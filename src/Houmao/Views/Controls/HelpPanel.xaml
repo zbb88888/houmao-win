@@ -4,167 +4,141 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             Background="{DynamicResource WindowBackground}">
+             Background="Transparent">
     
-    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="12">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="16,12">
         <StackPanel>
-            <!-- 标题 -->
-            <TextBlock Text="Help" 
-                       FontSize="18" 
-                       FontWeight="SemiBold"
-                       Foreground="{DynamicResource TitleBarText}"
-                       Margin="0,0,0,16"/>
-            
             <!-- 快捷键部分 -->
-            <TextBlock Text="Keyboard Shortcuts" 
-                       FontSize="14" 
+            <TextBlock Text="KEYBOARD SHORTCUTS" 
+                       FontSize="12" 
                        FontWeight="SemiBold"
-                       Foreground="{DynamicResource MessageText}"
-                       Margin="0,0,0,8"/>
+                       Foreground="{DynamicResource TextSecondary}"
+                       Margin="0,0,0,12"/>
             
-            <Border Background="{DynamicResource StatusBarBackground}"
-                    CornerRadius="4"
-                    Padding="12"
-                    Margin="0,0,0,16">
-                <StackPanel>
-                    <Grid Margin="0,0,0,6">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Double Alt" FontWeight="SemiBold"/>
-                        <TextBlock Grid.Column="1" Text="Show/Hide window"/>
-                    </Grid>
-                    
-                    <Grid Margin="0,0,0,6">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Esc" FontWeight="SemiBold"/>
-                        <TextBlock Grid.Column="1" Text="Hide window"/>
-                    </Grid>
-                    
-                    <Grid Margin="0,0,0,6">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Ctrl+W" FontWeight="SemiBold"/>
-                        <TextBlock Grid.Column="1" Text="Hide window"/>
-                    </Grid>
-                    
-                    <Grid Margin="0,0,0,6">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Ctrl+," FontWeight="SemiBold"/>
-                        <TextBlock Grid.Column="1" Text="Open settings"/>
-                    </Grid>
-                    
-                    <Grid Margin="0,0,0,6">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Ctrl+K" FontWeight="SemiBold"/>
-                        <TextBlock Grid.Column="1" Text="Clear conversation"/>
-                    </Grid>
-                    
-                    <Grid Margin="0,0,0,6">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="↑ / ↓" FontWeight="SemiBold"/>
-                        <TextBlock Grid.Column="1" Text="Command history"/>
-                    </Grid>
-                </StackPanel>
-            </Border>
+            <Grid Margin="0,0,0,6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Double Alt" FontWeight="SemiBold" Foreground="{DynamicResource Text}"/>
+                <TextBlock Grid.Column="1" Text="Show/Hide window" Foreground="{DynamicResource TextSecondary}"/>
+            </Grid>
+            
+            <Grid Margin="0,0,0,6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Esc" FontWeight="SemiBold" Foreground="{DynamicResource Text}"/>
+                <TextBlock Grid.Column="1" Text="Hide window" Foreground="{DynamicResource TextSecondary}"/>
+            </Grid>
+            
+            <Grid Margin="0,0,0,6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Ctrl+W" FontWeight="SemiBold" Foreground="{DynamicResource Text}"/>
+                <TextBlock Grid.Column="1" Text="Hide window" Foreground="{DynamicResource TextSecondary}"/>
+            </Grid>
+            
+            <Grid Margin="0,0,0,6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Ctrl+," FontWeight="SemiBold" Foreground="{DynamicResource Text}"/>
+                <TextBlock Grid.Column="1" Text="Open settings" Foreground="{DynamicResource TextSecondary}"/>
+            </Grid>
+            
+            <Grid Margin="0,0,0,6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Ctrl+K" FontWeight="SemiBold" Foreground="{DynamicResource Text}"/>
+                <TextBlock Grid.Column="1" Text="Clear conversation" Foreground="{DynamicResource TextSecondary}"/>
+            </Grid>
+            
+            <Grid Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="↑ / ↓" FontWeight="SemiBold" Foreground="{DynamicResource Text}"/>
+                <TextBlock Grid.Column="1" Text="Command history" Foreground="{DynamicResource TextSecondary}"/>
+            </Grid>
             
             <!-- 命令部分 -->
-            <TextBlock Text="Commands" 
-                       FontSize="14" 
+            <TextBlock Text="COMMANDS" 
+                       FontSize="12" 
                        FontWeight="SemiBold"
-                       Foreground="{DynamicResource MessageText}"
-                       Margin="0,0,0,8"/>
+                       Foreground="{DynamicResource TextSecondary}"
+                       Margin="0,0,0,12"/>
             
-            <Border Background="{DynamicResource StatusBarBackground}"
-                    CornerRadius="4"
-                    Padding="12"
-                    Margin="0,0,0,16">
-                <StackPanel>
-                    <Grid Margin="0,0,0,6">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="b" FontWeight="SemiBold"/>
-                        <TextBlock Grid.Column="1" Text="Toggle history panel"/>
-                    </Grid>
-                    
-                    <Grid Margin="0,0,0,6">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="h" FontWeight="SemiBold"/>
-                        <TextBlock Grid.Column="1" Text="Toggle help panel"/>
-                    </Grid>
-                    
-                    <Grid Margin="0,0,0,6">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="@provider msg" FontWeight="SemiBold"/>
-                        <TextBlock Grid.Column="1" Text="Use specific provider"/>
-                    </Grid>
-                    
-                    <Grid Margin="0,0,0,6">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="@model msg" FontWeight="SemiBold"/>
-                        <TextBlock Grid.Column="1" Text="Use specific model"/>
-                    </Grid>
-                </StackPanel>
-            </Border>
+            <Grid Margin="0,0,0,6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="b" FontWeight="SemiBold" Foreground="{DynamicResource Text}"/>
+                <TextBlock Grid.Column="1" Text="Toggle history panel" Foreground="{DynamicResource TextSecondary}"/>
+            </Grid>
+            
+            <Grid Margin="0,0,0,6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="h" FontWeight="SemiBold" Foreground="{DynamicResource Text}"/>
+                <TextBlock Grid.Column="1" Text="Toggle help panel" Foreground="{DynamicResource TextSecondary}"/>
+            </Grid>
+            
+            <Grid Margin="0,0,0,6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="@provider msg" FontWeight="SemiBold" Foreground="{DynamicResource Text}"/>
+                <TextBlock Grid.Column="1" Text="Use specific provider" Foreground="{DynamicResource TextSecondary}"/>
+            </Grid>
+            
+            <Grid Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="@model msg" FontWeight="SemiBold" Foreground="{DynamicResource Text}"/>
+                <TextBlock Grid.Column="1" Text="Use specific model" Foreground="{DynamicResource TextSecondary}"/>
+            </Grid>
             
             <!-- Provider 列表 -->
-            <TextBlock Text="Configured Providers" 
-                       FontSize="14" 
+            <TextBlock Text="CONFIGURED PROVIDERS" 
+                       FontSize="12" 
                        FontWeight="SemiBold"
-                       Foreground="{DynamicResource MessageText}"
-                       Margin="0,0,0,8"/>
+                       Foreground="{DynamicResource TextSecondary}"
+                       Margin="0,0,0,12"/>
             
-            <Border Background="{DynamicResource StatusBarBackground}"
-                    CornerRadius="4"
-                    Padding="12"
-                    Margin="0,0,0,16">
-                <ItemsControl ItemsSource="{Binding Providers}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0,0,0,6">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold"/>
-                                    <TextBlock Text=" (default)" 
-                                               Foreground="{DynamicResource ButtonBackground}"
-                                               Visibility="{Binding IsDefault, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                                </StackPanel>
-                                <TextBlock Text="{Binding ApiUrl}" 
-                                           Foreground="{DynamicResource StatusBarText}"
-                                           FontSize="11"/>
-                                <TextBlock Text="{Binding ModelsText}" 
-                                           Foreground="{DynamicResource StatusBarText}"
-                                           FontSize="11"/>
+            <ItemsControl ItemsSource="{Binding Providers}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="0,0,0,8">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="{DynamicResource Text}"/>
+                                <TextBlock Text=" (default)" 
+                                           Foreground="{DynamicResource Accent}"
+                                           Visibility="{Binding IsDefault, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </Border>
+                            <TextBlock Text="{Binding ApiUrl}" 
+                                       Foreground="{DynamicResource TextSecondary}"
+                                       FontSize="12"/>
+                            <TextBlock Text="{Binding ModelsText}" 
+                                       Foreground="{DynamicResource TextSecondary}"
+                                       FontSize="12"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

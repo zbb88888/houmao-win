@@ -8,6 +8,7 @@
     <RootNamespace>Houmao</RootNamespace>
     <AssemblyName>Houmao</AssemblyName>
     <ApplicationIcon>Resources\Icons\houmao.ico</ApplicationIcon>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

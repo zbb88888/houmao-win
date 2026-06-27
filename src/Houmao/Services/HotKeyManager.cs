@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Houmao.Interop;
@@ -16,7 +15,6 @@ namespace Houmao.Services
         private User32.LowLevelKeyboardProc? _hookProc; // 保持引用防止GC
         
         private DateTime _lastAltTime = DateTime.MinValue;
-        private readonly string _logPath = Path.Combine(Path.GetTempPath(), "houmao_hotkey.log");
         
         public event EventHandler? DoubleAltPressed;
         
@@ -24,7 +22,7 @@ namespace Houmao.Services
         {
             _logger = logger;
             
-            File.WriteAllText(_logPath, $"[{DateTime.Now}] HotKeyManager created\n");
+            _logger.LogDebug("HotKeyManager created");
             
             _hookThread = new Thread(HookThreadProc)
             {
@@ -38,7 +36,7 @@ namespace Houmao.Services
         {
             try
             {
-                File.AppendAllText(_logPath, $"[{DateTime.Now}] Hook thread started\n");
+                _logger.LogDebug("Hook thread started");
                 
                 // 必须保持委托引用防止GC
                 _hookProc = HookCallback;
@@ -52,11 +50,11 @@ namespace Houmao.Services
                 if (_hook == IntPtr.Zero)
                 {
                     var error = Marshal.GetLastWin32Error();
-                    File.AppendAllText(_logPath, $"[{DateTime.Now}] Failed: error {error}\n");
+                    _logger.LogError("Failed to install hook: error {Error}", error);
                     return;
                 }
                 
-                File.AppendAllText(_logPath, $"[{DateTime.Now}] Hook installed OK\n");
+                _logger.LogDebug("Hook installed OK");
                 
                 // 消息循环
                 while (User32.GetMessage(out var msg, IntPtr.Zero, 0, 0))
@@ -67,7 +65,7 @@ namespace Houmao.Services
             }
             catch (Exception ex)
             {
-                File.AppendAllText(_logPath, $"[{DateTime.Now}] Error: {ex.Message}\n");
+                _logger.LogError(ex, "Hook thread error");
             }
         }
         
@@ -77,18 +75,14 @@ namespace Houmao.Services
             {
                 var info = Marshal.PtrToStructure<User32.KBDLLHOOKSTRUCT>(lParam);
                 
-                File.AppendAllText(_logPath, $"[{DateTime.Now}] Key: {info.vkCode}\n");
-                
                 if (info.vkCode == 0x1B) // Escape 键
                 {
                     var now = DateTime.Now;
                     var elapsed = now - _lastAltTime;
                     
-                    File.AppendAllText(_logPath, $"[{now}] ALT! elapsed={elapsed.TotalMilliseconds:F0}ms\n");
-                    
                     if (elapsed.TotalMilliseconds < 500 && elapsed.TotalMilliseconds > 30)
                     {
-                        File.AppendAllText(_logPath, $"[{now}] DOUBLE ALT!\n");
+                        _logger.LogDebug("Double ALT detected");
                         DoubleAltPressed?.Invoke(this, EventArgs.Empty);
                         _lastAltTime = DateTime.MinValue;
                     }

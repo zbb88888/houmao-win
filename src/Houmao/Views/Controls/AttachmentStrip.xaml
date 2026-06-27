@@ -14,20 +14,21 @@
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
             <DataTemplate>
-                <Border Background="{DynamicResource AttachmentBackground}"
-                        CornerRadius="4"
-                        Padding="6,4"
-                        Margin="0,0,6,0">
+                <Border Background="{DynamicResource Surface}"
+                        CornerRadius="6"
+                        Padding="8,6"
+                        Margin="0,0,8,0">
                     <StackPanel Orientation="Horizontal">
                         <!-- 图标 -->
                         <TextBlock Text="{Binding Type, Converter={StaticResource AttachmentTypeToIconConverter}}"
                                    FontSize="14"
+                                   Foreground="{DynamicResource Text}"
                                    VerticalAlignment="Center"
-                                   Margin="0,0,6,0"/>
+                                   Margin="0,0,8,0"/>
                         
                         <!-- 文件名 -->
                         <TextBlock Text="{Binding FileName}" 
-                                   Foreground="{DynamicResource AttachmentText}"
+                                   Foreground="{DynamicResource Text}"
                                    VerticalAlignment="Center"
                                    MaxWidth="150"
                                    TextTrimming="CharacterEllipsis"/>
@@ -40,7 +41,7 @@
                                 Command="{Binding DataContext.RemoveAttachmentCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                 CommandParameter="{Binding}"
                                 ToolTip="Remove"
-                                Margin="6,0,0,0"/>
+                                Margin="8,0,0,0"/>
                     </StackPanel>
                 </Border>
             </DataTemplate>

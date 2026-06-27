@@ -29,7 +29,8 @@ namespace Houmao.Views
             
             _viewModel.PropertyChanged += (s, e) =>
             {
-                if (e.PropertyName == nameof(MainViewModel.HasMessages))
+                if (e.PropertyName == nameof(MainViewModel.HasMessages) || 
+                    e.PropertyName == nameof(MainViewModel.CurrentPanel))
                 {
                     UpdateSeparatorVisibility();
                 }
@@ -88,6 +89,22 @@ namespace Houmao.Views
                 OpenSettings();
                 e.Handled = true;
             }
+            
+            // Esc 关闭面板
+            if (e.Key == WpfInput.Key.Escape)
+            {
+                if (_viewModel.CurrentPanel != null)
+                {
+                    _viewModel.CurrentPanel = null;
+                    UpdateSeparatorVisibility();
+                    e.Handled = true;
+                }
+                else
+                {
+                    Hide();
+                    e.Handled = true;
+                }
+            }
         }
 
         private void Window_MouseLeftButtonDown(object sender, WpfInput.MouseButtonEventArgs e)
@@ -133,7 +150,7 @@ namespace Houmao.Views
 
         private void UpdateSeparatorVisibility()
         {
-            Separator.Visibility = _viewModel.HasMessages 
+            Separator.Visibility = (_viewModel.HasMessages || _viewModel.CurrentPanel != null) 
                 ? Visibility.Visible 
                 : Visibility.Collapsed;
         }
@@ -207,7 +224,7 @@ namespace Houmao.Views
                     }
                 });
             }
-            catch (Exception ex)
+            catch
             {
                 // Log error silently
             }
