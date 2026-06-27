@@ -10,6 +10,7 @@
     <converters:AttachmentTypeToIconConverter x:Key="AttachmentTypeToIconConverter"/>
     <converters:AttachmentTypeToVisibilityConverter x:Key="AttachmentTypeToVisibilityConverter"/>
     <converters:DefaultToBackgroundConverter x:Key="DefaultToBackgroundConverter"/>
+    <converters:StringTitleCaseConverter x:Key="StringTitleCaseConverter"/>
     
     <!-- 通用按钮样式：透明底/无边框文字按钮 -->
     <Style x:Key="ButtonStyle" TargetType="Button">

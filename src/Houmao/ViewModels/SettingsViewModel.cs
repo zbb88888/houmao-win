@@ -51,6 +51,12 @@ namespace Houmao.ViewModels
         [ObservableProperty]
         private string _initialPage = "providers";
         
+        // 是否显示 Providers 页面
+        public bool IsProvidersPage => InitialPage == "providers";
+        
+        // 是否显示 General 页面
+        public bool IsGeneralPage => InitialPage == "general";
+        
         public SettingsViewModel(ILogger<SettingsViewModel> logger, IAppSettings settings)
         {
             _logger = logger;

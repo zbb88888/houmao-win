@@ -40,17 +40,6 @@ namespace Houmao.Views
             }
             
             _viewModel.LoadSettings();
-            
-            // 根据 InitialPage 滚动到对应位置
-            if (_viewModel.InitialPage == "general")
-            {
-                Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    var transform = GeneralSection.TransformToAncestor(ContentScroller);
-                    var position = transform.Transform(new Point(0, 0));
-                    ContentScroller.ScrollToVerticalOffset(position.Y);
-                }), System.Windows.Threading.DispatcherPriority.Background);
-            }
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)

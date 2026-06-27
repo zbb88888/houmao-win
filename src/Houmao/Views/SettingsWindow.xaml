@@ -39,7 +39,7 @@
                 </Grid.ColumnDefinitions>
                 
                 <TextBlock Grid.Column="0" 
-                           Text="Settings" 
+                           Text="{Binding InitialPage, StringFormat='{}{0} Settings', Converter={StaticResource StringTitleCaseConverter}}"
                            FontSize="15" 
                            FontWeight="SemiBold"
                            Foreground="{DynamicResource Text}"
@@ -51,19 +51,12 @@
                         Click="CloseButton_Click"/>
             </Grid>
             
-            <!-- 内容区 -->
-            <ScrollViewer x:Name="ContentScroller"
-                          Grid.Row="1" 
+            <!-- Providers 页面 -->
+            <ScrollViewer Grid.Row="1" 
                           VerticalScrollBarVisibility="Auto"
-                          Padding="24,0,24,16">
+                          Padding="24,0,24,16"
+                          Visibility="{Binding IsProvidersPage, Converter={StaticResource BoolToVisibilityConverter}}">
                 <StackPanel>
-                    <!-- PROVIDERS 部分 -->
-                    <TextBlock Text="PROVIDERS" 
-                               FontSize="11" 
-                               FontWeight="SemiBold"
-                               Foreground="{DynamicResource TextSecondary}"
-                               Margin="0,0,0,8"/>
-                    
                     <!-- Provider 列表 -->
                     <ItemsControl ItemsSource="{Binding Providers}">
                         <ItemsControl.ItemTemplate>
@@ -138,7 +131,7 @@
                             Style="{DynamicResource ButtonStyle}"
                             FontSize="12"
                             HorizontalAlignment="Left"
-                            Margin="0,4,0,12"
+                            Margin="0,4,0,0"
                             Command="{Binding AddProviderCommand}"/>
                     
                     <!-- 编辑 Provider 表单（就地展开） -->
@@ -146,7 +139,7 @@
                             Background="{DynamicResource Surface}"
                             CornerRadius="6"
                             Padding="12"
-                            Margin="0,0,0,16"
+                            Margin="0,12,0,0"
                             Visibility="{Binding IsEditing, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -155,6 +148,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
@@ -190,11 +184,10 @@
                             <PasswordBox Grid.Row="5" Grid.Column="0"
                                          x:Name="ApiKeyPasswordBox"
                                          Style="{DynamicResource PasswordBoxStyle}"
-                                         PasswordChanged="ApiKeyPasswordBox_PasswordChanged"
-                                         Margin="0,0,0,0"/>
+                                         PasswordChanged="ApiKeyPasswordBox_PasswordChanged"/>
                             
                             <!-- 右列 -->
-                            <TextBlock Grid.Row="0" Grid.Column="2" Text="Models (comma separated)" 
+                            <TextBlock Grid.Row="0" Grid.Column="2" Text="Models" 
                                        FontSize="11"
                                        Foreground="{DynamicResource TextSecondary}"
                                        Margin="0,0,0,4"/>
@@ -226,98 +219,85 @@
                             </StackPanel>
                         </Grid>
                     </Border>
-                    
-                    <!-- GENERAL 部分 -->
-                    <TextBlock x:Name="GeneralSection"
-                               Text="GENERAL" 
-                               FontSize="11" 
-                               FontWeight="SemiBold"
-                               Foreground="{DynamicResource TextSecondary}"
-                               Margin="0,0,0,8"/>
-                    
-                    <!-- 通用设置：两列布局 -->
-                    <Grid Margin="0,0,0,0">
+                </StackPanel>
+            </ScrollViewer>
+            
+            <!-- General 页面 -->
+            <ScrollViewer Grid.Row="1" 
+                          VerticalScrollBarVisibility="Auto"
+                          Padding="24,0,24,16"
+                          Visibility="{Binding IsGeneralPage, Converter={StaticResource BoolToVisibilityConverter}}">
+                <StackPanel>
+                    <!-- 开关选项 -->
+                    <Grid Margin="0,0,0,12">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="24"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
                         
-                        <!-- 左列 -->
-                        <Grid Grid.Row="0" Grid.Column="0" Margin="0,0,0,8">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            
-                            <TextBlock Grid.Column="0" 
-                                       Text="Start with Windows"
-                                       FontSize="13"
-                                       Foreground="{DynamicResource Text}"
-                                       VerticalAlignment="Center"/>
-                            
-                            <ToggleButton Grid.Column="1"
-                                          Style="{DynamicResource ToggleSwitchStyle}"
-                                          IsChecked="{Binding StartWithWindows}"/>
-                        </Grid>
+                        <TextBlock Grid.Column="0" 
+                                   Text="Start with Windows"
+                                   FontSize="13"
+                                   Foreground="{DynamicResource Text}"
+                                   VerticalAlignment="Center"/>
                         
-                        <Grid Grid.Row="1" Grid.Column="0" Margin="0,0,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            
-                            <TextBlock Grid.Column="0" 
-                                       Text="Copy on selection"
-                                       FontSize="13"
-                                       Foreground="{DynamicResource Text}"
-                                       VerticalAlignment="Center"/>
-                            
-                            <ToggleButton Grid.Column="1"
-                                          Style="{DynamicResource ToggleSwitchStyle}"
-                                          IsChecked="{Binding SelectToCopyEnabled}"/>
-                        </Grid>
+                        <ToggleButton Grid.Column="1"
+                                      Style="{DynamicResource ToggleSwitchStyle}"
+                                      IsChecked="{Binding StartWithWindows}"/>
+                    </Grid>
+                    
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
                         
-                        <!-- 右列 -->
-                        <Grid Grid.Row="0" Grid.Column="2" Margin="0,0,0,8">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            
-                            <TextBlock Grid.Column="0" 
-                                       Text="Track usage history"
-                                       FontSize="13"
-                                       Foreground="{DynamicResource Text}"
-                                       VerticalAlignment="Center"/>
-                            
-                            <ToggleButton Grid.Column="1"
-                                          Style="{DynamicResource ToggleSwitchStyle}"
-                                          IsChecked="{Binding TrackUsageHistory}"/>
-                        </Grid>
+                        <TextBlock Grid.Column="0" 
+                                   Text="Copy on selection"
+                                   FontSize="13"
+                                   Foreground="{DynamicResource Text}"
+                                   VerticalAlignment="Center"/>
                         
-                        <Grid Grid.Row="1" Grid.Column="2" Margin="0,0,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            
-                            <TextBlock Grid.Column="0" 
-                                       Text="Theme"
-                                       FontSize="13"
-                                       Foreground="{DynamicResource Text}"
-                                       VerticalAlignment="Center"/>
-                            
-                            <ComboBox Grid.Column="1"
-                                      ItemsSource="{Binding ThemeOptions}"
-                                      SelectedItem="{Binding SelectedTheme}"
-                                      Style="{DynamicResource ComboBoxStyle}"
-                                      Width="100"/>
-                        </Grid>
+                        <ToggleButton Grid.Column="1"
+                                      Style="{DynamicResource ToggleSwitchStyle}"
+                                      IsChecked="{Binding SelectToCopyEnabled}"/>
+                    </Grid>
+                    
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Column="0" 
+                                   Text="Track usage history"
+                                   FontSize="13"
+                                   Foreground="{DynamicResource Text}"
+                                   VerticalAlignment="Center"/>
+                        
+                        <ToggleButton Grid.Column="1"
+                                      Style="{DynamicResource ToggleSwitchStyle}"
+                                      IsChecked="{Binding TrackUsageHistory}"/>
+                    </Grid>
+                    
+                    <!-- 主题选择 -->
+                    <Grid Margin="0,4,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Column="0" 
+                                   Text="Theme"
+                                   FontSize="13"
+                                   Foreground="{DynamicResource Text}"
+                                   VerticalAlignment="Center"/>
+                        
+                        <ComboBox Grid.Column="1"
+                                  ItemsSource="{Binding ThemeOptions}"
+                                  SelectedItem="{Binding SelectedTheme}"
+                                  Style="{DynamicResource ComboBoxStyle}"
+                                  Width="120"/>
                     </Grid>
                 </StackPanel>
             </ScrollViewer>
