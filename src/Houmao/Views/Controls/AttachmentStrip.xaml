@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="clr-namespace:Houmao.Models"
              mc:Ignorable="d"
              Background="Transparent">
     
@@ -14,36 +15,81 @@
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
             <DataTemplate>
-                <Border Background="{DynamicResource Surface}"
-                        CornerRadius="6"
-                        Padding="8,6"
-                        Margin="0,0,8,0">
-                    <StackPanel Orientation="Horizontal">
-                        <!-- 图标 -->
-                        <TextBlock Text="{Binding Type, Converter={StaticResource AttachmentTypeToIconConverter}}"
-                                   FontSize="14"
-                                   Foreground="{DynamicResource Text}"
-                                   VerticalAlignment="Center"
-                                   Margin="0,0,8,0"/>
-                        
-                        <!-- 文件名 -->
-                        <TextBlock Text="{Binding FileName}" 
-                                   Foreground="{DynamicResource Text}"
-                                   VerticalAlignment="Center"
-                                   MaxWidth="150"
-                                   TextTrimming="CharacterEllipsis"/>
-                        
-                        <!-- 删除按钮 -->
-                        <Button Content="×" 
-                                Width="16" 
-                                Height="16"
-                                Style="{DynamicResource WindowButtonStyle}"
-                                Command="{Binding DataContext.RemoveAttachmentCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                CommandParameter="{Binding}"
-                                ToolTip="Remove"
-                                Margin="8,0,0,0"/>
-                    </StackPanel>
-                </Border>
+                <Grid>
+                    <!-- 图片附件：缩略图模式 -->
+                    <Border x:Name="ImageAttachment"
+                            Width="48" Height="48"
+                            CornerRadius="6"
+                            ClipToBounds="True"
+                            Visibility="{Binding Type, Converter={StaticResource AttachmentTypeToVisibilityConverter}, ConverterParameter=Image}"
+                            MouseEnter="Attachment_MouseEnter"
+                            MouseLeave="Attachment_MouseLeave">
+                        <Grid>
+                            <Image Source="{Binding Thumbnail}"
+                                   Stretch="UniformToFill"/>
+                            
+                            <!-- 右上角删除按钮（悬停显示） -->
+                            <Button x:Name="DeleteButton"
+                                    Content="×"
+                                    Width="16" Height="16"
+                                    FontSize="10"
+                                    Foreground="White"
+                                    Background="#80000000"
+                                    BorderThickness="0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Margin="2"
+                                    Visibility="Collapsed"
+                                    Style="{DynamicResource WindowButtonStyle}"
+                                    Command="{Binding DataContext.RemoveAttachmentCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}"/>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- 音频/文件附件：图标+文件名模式 -->
+                    <Border x:Name="FileAttachment"
+                            Background="{DynamicResource Surface}"
+                            CornerRadius="6"
+                            Padding="8,6"
+                            Margin="0,0,8,0"
+                            Visibility="{Binding Type, Converter={StaticResource AttachmentTypeToVisibilityConverter}, ConverterParameter=File}"
+                            MouseEnter="Attachment_MouseEnter"
+                            MouseLeave="Attachment_MouseLeave">
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <!-- 图标 -->
+                                <TextBlock Text="{Binding Type, Converter={StaticResource AttachmentTypeToIconConverter}}"
+                                           FontSize="14"
+                                           Foreground="{DynamicResource Text}"
+                                           VerticalAlignment="Center"
+                                           Margin="0,0,8,0"/>
+                                
+                                <!-- 文件名 -->
+                                <TextBlock Text="{Binding FileName}" 
+                                           Foreground="{DynamicResource Text}"
+                                           VerticalAlignment="Center"
+                                           MaxWidth="120"
+                                           TextTrimming="CharacterEllipsis"/>
+                            </StackPanel>
+                            
+                            <!-- 右上角删除按钮（悬停显示） -->
+                            <Button x:Name="DeleteButton2"
+                                    Content="×"
+                                    Width="16" Height="16"
+                                    FontSize="10"
+                                    Foreground="{DynamicResource TextSecondary}"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Margin="-4,-4,0,0"
+                                    Visibility="Collapsed"
+                                    Style="{DynamicResource WindowButtonStyle}"
+                                    Command="{Binding DataContext.RemoveAttachmentCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}"/>
+                        </Grid>
+                    </Border>
+                </Grid>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
     </ItemsControl>

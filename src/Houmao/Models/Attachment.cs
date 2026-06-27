@@ -12,6 +12,34 @@ namespace Houmao.Models
         public string Base64Data { get; set; } = string.Empty;
         public string MimeType { get; set; } = string.Empty;
         
+        // 用于 UI 显示的缩略图（懒加载）
+        private BitmapSource? _thumbnail;
+        public BitmapSource? Thumbnail
+        {
+            get
+            {
+                if (_thumbnail == null && Type == AttachmentType.Image && !string.IsNullOrEmpty(FilePath) && File.Exists(FilePath))
+                {
+                    try
+                    {
+                        var bitmap = new BitmapImage();
+                        bitmap.BeginInit();
+                        bitmap.UriSource = new Uri(FilePath, UriKind.Absolute);
+                        bitmap.DecodePixelWidth = 48; // 缩略图尺寸
+                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmap.EndInit();
+                        bitmap.Freeze();
+                        _thumbnail = bitmap;
+                    }
+                    catch
+                    {
+                        // 忽略加载失败
+                    }
+                }
+                return _thumbnail;
+            }
+        }
+        
         public static Attachment FromFile(string filePath)
         {
             var attachment = new Attachment

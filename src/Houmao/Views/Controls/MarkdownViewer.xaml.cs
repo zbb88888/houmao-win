@@ -166,21 +166,35 @@ namespace Houmao.Views.Controls
             docViewer.Document = flowDoc;
             border.Child = docViewer;
             
-            // 复制按钮（简化实现）
+            // 复制按钮（悬停显示）
             var copyButton = new Button();
             copyButton.Content = "Copy";
             copyButton.Style = (Style)Application.Current.TryFindResource("WindowButtonStyle");
             copyButton.HorizontalAlignment = HorizontalAlignment.Right;
             copyButton.VerticalAlignment = VerticalAlignment.Top;
             copyButton.Margin = new Thickness(0, 4, 4, 0);
+            copyButton.Visibility = Visibility.Collapsed;
             copyButton.Click += (s, e) =>
             {
                 Clipboard.SetText(codeText.Text);
+                copyButton.Content = "Copied!";
+                var timer = new System.Windows.Threading.DispatcherTimer();
+                timer.Interval = TimeSpan.FromSeconds(2);
+                timer.Tick += (s2, e2) =>
+                {
+                    copyButton.Content = "Copy";
+                    timer.Stop();
+                };
+                timer.Start();
             };
             
             var grid = new Grid();
             grid.Children.Add(border);
             grid.Children.Add(copyButton);
+            
+            // 鼠标悬停显示 Copy 按钮
+            grid.MouseEnter += (s, e) => copyButton.Visibility = Visibility.Visible;
+            grid.MouseLeave += (s, e) => copyButton.Visibility = Visibility.Collapsed;
             
             section.Blocks.Add(new System.Windows.Documents.BlockUIContainer(grid));
             Document.Blocks.Add(section);

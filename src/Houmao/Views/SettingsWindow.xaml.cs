@@ -65,6 +65,11 @@ namespace Houmao.Views
         {
             Close();
         }
+        
+        private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
 
         private void ProviderItem_MouseEnter(object sender, MouseEventArgs e)
         {

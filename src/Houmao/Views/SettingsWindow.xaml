@@ -29,7 +29,8 @@
             </Grid.RowDefinitions>
             
             <!-- 标题栏 -->
-            <Grid Grid.Row="0" Margin="20,16,16,16">
+            <Grid Grid.Row="0" Margin="20,16,16,16"
+                  MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>

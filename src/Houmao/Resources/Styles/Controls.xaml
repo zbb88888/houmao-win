@@ -8,6 +8,7 @@
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
     <converters:AttachmentTypeToIconConverter x:Key="AttachmentTypeToIconConverter"/>
+    <converters:AttachmentTypeToVisibilityConverter x:Key="AttachmentTypeToVisibilityConverter"/>
     <converters:DefaultToBackgroundConverter x:Key="DefaultToBackgroundConverter"/>
     
     <!-- 通用按钮样式：透明底/无边框文字按钮 -->
@@ -209,7 +210,8 @@
                 <ControlTemplate TargetType="ScrollBar">
                     <Grid>
                         <Track x:Name="PART_Track" 
-                               IsDirectionReversed="True">
+                               IsDirectionReversed="True"
+                               Grid.IsSharedSizeScope="True">
                             <Track.Thumb>
                                 <Thumb>
                                     <Thumb.Style>
@@ -220,8 +222,13 @@
                                                         <Border x:Name="thumb"
                                                                 Background="{DynamicResource TextSecondary}"
                                                                 CornerRadius="3"
-                                                                Opacity="0.3"
-                                                                Margin="0,2"/>
+                                                                Opacity="0.2"
+                                                                Margin="1,2"/>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="thumb" Property="Opacity" Value="0.5"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
                                                     </ControlTemplate>
                                                 </Setter.Value>
                                             </Setter>
@@ -231,6 +238,51 @@
                             </Track.Thumb>
                         </Track>
                     </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- 默认 ScrollViewer 样式：overlay 模式 -->
+    <Style TargetType="ScrollViewer">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ScrollViewer">
+                    <Grid>
+                        <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
+                                                CanContentScroll="True"
+                                                CanHorizontallyScroll="False"
+                                                CanVerticallyScroll="False"/>
+                        
+                        <!-- 垂直滚动条 overlay -->
+                        <ScrollBar x:Name="PART_VerticalScrollBar"
+                                   Opacity="0"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Stretch"
+                                   Style="{StaticResource ScrollBarStyle}"
+                                   ViewportSize="{TemplateBinding ViewportHeight}"
+                                   Maximum="{TemplateBinding ScrollableHeight}"
+                                   Value="{Binding VerticalOffset, RelativeSource={RelativeSource TemplatedParent}}"
+                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+                        
+                        <!-- 水平滚动条 overlay -->
+                        <ScrollBar x:Name="PART_HorizontalScrollBar"
+                                   Opacity="0"
+                                   Orientation="Horizontal"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Bottom"
+                                   Style="{StaticResource ScrollBarStyle}"
+                                   ViewportSize="{TemplateBinding ViewportWidth}"
+                                   Maximum="{TemplateBinding ScrollableWidth}"
+                                   Value="{Binding HorizontalOffset, RelativeSource={RelativeSource TemplatedParent}}"
+                                   Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_VerticalScrollBar" Property="Opacity" Value="1"/>
+                            <Setter TargetName="PART_HorizontalScrollBar" Property="Opacity" Value="1"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
