@@ -47,6 +47,10 @@ namespace Houmao.ViewModels
         [ObservableProperty]
         private List<string> _themeOptions = new() { "Light", "Dark", "System" };
         
+        // 初始页面："providers" 或 "general"
+        [ObservableProperty]
+        private string _initialPage = "providers";
+        
         public SettingsViewModel(ILogger<SettingsViewModel> logger, IAppSettings settings)
         {
             _logger = logger;

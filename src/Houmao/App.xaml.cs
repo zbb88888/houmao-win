@@ -88,10 +88,21 @@ namespace Houmao
                 mainWindow.ShowAndActivate();
             };
             
-            var settingsItem = new MenuItem { Header = "Settings" };
-            settingsItem.Click += (s, e) =>
+            var providersItem = new MenuItem { Header = "Providers" };
+            providersItem.Click += (s, e) =>
             {
-                var settingsWindow = _services.GetRequiredService<SettingsWindow>();
+                var vm = _services.GetRequiredService<SettingsViewModel>();
+                vm.InitialPage = "providers";
+                var settingsWindow = new SettingsWindow(vm);
+                settingsWindow.ShowDialog();
+            };
+            
+            var generalItem = new MenuItem { Header = "General" };
+            generalItem.Click += (s, e) =>
+            {
+                var vm = _services.GetRequiredService<SettingsViewModel>();
+                vm.InitialPage = "general";
+                var settingsWindow = new SettingsWindow(vm);
                 settingsWindow.ShowDialog();
             };
             
@@ -101,8 +112,12 @@ namespace Houmao
                 Shutdown();
             };
             
+            var settingsMenuItem = new MenuItem { Header = "Settings" };
+            settingsMenuItem.Items.Add(providersItem);
+            settingsMenuItem.Items.Add(generalItem);
+            
             contextMenu.Items.Add(showItem);
-            contextMenu.Items.Add(settingsItem);
+            contextMenu.Items.Add(settingsMenuItem);
             contextMenu.Items.Add(new Separator());
             contextMenu.Items.Add(exitItem);
             

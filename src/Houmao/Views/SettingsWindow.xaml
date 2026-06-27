@@ -52,7 +52,8 @@
             </Grid>
             
             <!-- 内容区 -->
-            <ScrollViewer Grid.Row="1" 
+            <ScrollViewer x:Name="ContentScroller"
+                          Grid.Row="1" 
                           VerticalScrollBarVisibility="Auto"
                           Padding="24,0,24,16">
                 <StackPanel>
@@ -227,7 +228,8 @@
                     </Border>
                     
                     <!-- GENERAL 部分 -->
-                    <TextBlock Text="GENERAL" 
+                    <TextBlock x:Name="GeneralSection"
+                               Text="GENERAL" 
                                FontSize="11" 
                                FontWeight="SemiBold"
                                Foreground="{DynamicResource TextSecondary}"
