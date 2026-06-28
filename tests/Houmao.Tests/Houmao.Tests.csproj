@@ -5,6 +5,7 @@
     <UseWPF>true</UseWPF>
     <IsPackable>false</IsPackable>
     <RootNamespace>Houmao.Tests</RootNamespace>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

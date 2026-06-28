@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -225,18 +226,17 @@ namespace Houmao.Tests.ViewModels
         }
         
         [Fact]
-        public async Task CancelRequest_ShouldCancelActiveRequest()
+        public void CancelRequest_ShouldCancelActiveRequest()
         {
             // Arrange
             _viewModel.InputText = "Test";
             
-            var cts = new CancellationTokenSource();
             _aiClientMock.Setup(c => c.AskStreamAsync(
                     It.IsAny<string>(),
                     It.IsAny<List<ChatMessage>>(),
                     It.IsAny<List<Attachment>>(),
                     It.IsAny<CancellationToken>()))
-                .Returns(ToAsyncEnumerable(new List<string> { "token" }, cts.Token));
+            .Returns(ToAsyncEnumerable(new List<string> { "token" }));
             
             // Act
             _viewModel.CancelRequestCommand.Execute(null);
@@ -248,7 +248,7 @@ namespace Houmao.Tests.ViewModels
         
         private static async IAsyncEnumerable<string> ToAsyncEnumerable(
             IEnumerable<string> items,
-            CancellationToken cancellationToken = default)
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             foreach (var item in items)
             {
