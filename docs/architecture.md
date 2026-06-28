@@ -16,11 +16,12 @@
 ```xml
 <!-- src/Houmao/Houmao.csproj 关键依赖 -->
 <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*" />
-<PackageReference Include="H.NotifyIcon.Wpf" Version="2.*" />
 <PackageReference Include="Markdig" Version="0.40.*" />
 <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.*" />
 <PackageReference Include="Microsoft.Extensions.Logging" Version="9.*" />
 ```
+
+系统托盘使用框架自带 `System.Windows.Forms.NotifyIcon`，避免 `net9.0-windows` 下第三方托盘库的目标框架兼容性告警。
 
 ---
 
