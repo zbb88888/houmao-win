@@ -1,21 +1,20 @@
 using System;
+using System.Drawing;
+using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Houmao.Services;
 using Houmao.ViewModels;
 using Houmao.Views;
-using H.NotifyIcon;
+using Forms = System.Windows.Forms;
 
 namespace Houmao
 {
     public partial class App : Application
     {
         private ServiceProvider _services = null!;
-        private TaskbarIcon? _trayIcon;
+        private Forms.NotifyIcon? _trayIcon;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -73,67 +72,95 @@ namespace Houmao
 
         private void CreateTrayIcon()
         {
-            _trayIcon = new TaskbarIcon
+            _trayIcon = new Forms.NotifyIcon
             {
-                ToolTipText = "Houmao - AI Assistant",
-                IconSource = new BitmapImage(new Uri("pack://application:,,,/Resources/Icons/houmao.ico"))
+                Text = "Houmao - AI Assistant",
+                Icon = LoadTrayIcon(),
+                Visible = true
             };
             
-            var contextMenu = new ContextMenu();
+            var contextMenu = new Forms.ContextMenuStrip();
             
-            var showItem = new MenuItem { Header = "Show" };
-            showItem.Click += (s, e) =>
+            var showItem = new Forms.ToolStripMenuItem("Show");
+            showItem.Click += (_, _) =>
             {
-                var mainWindow = _services.GetRequiredService<MainWindow>();
-                mainWindow.ShowAndActivate();
+                Dispatcher.Invoke(() =>
+                {
+                    var mainWindow = _services.GetRequiredService<MainWindow>();
+                    mainWindow.ShowAndActivate();
+                });
             };
             
-            var providersItem = new MenuItem { Header = "Providers" };
-            providersItem.Click += (s, e) =>
+            var providersItem = new Forms.ToolStripMenuItem("Providers");
+            providersItem.Click += (_, _) =>
             {
-                var vm = _services.GetRequiredService<SettingsViewModel>();
-                vm.InitialPage = "providers";
-                var settingsWindow = new SettingsWindow(vm);
-                settingsWindow.ShowDialog();
+                Dispatcher.Invoke(() =>
+                {
+                    var vm = _services.GetRequiredService<SettingsViewModel>();
+                    vm.InitialPage = "providers";
+                    var settingsWindow = new SettingsWindow(vm);
+                    settingsWindow.ShowDialog();
+                });
             };
             
-            var generalItem = new MenuItem { Header = "General" };
-            generalItem.Click += (s, e) =>
+            var generalItem = new Forms.ToolStripMenuItem("General");
+            generalItem.Click += (_, _) =>
             {
-                var vm = _services.GetRequiredService<SettingsViewModel>();
-                vm.InitialPage = "general";
-                var settingsWindow = new SettingsWindow(vm);
-                settingsWindow.ShowDialog();
+                Dispatcher.Invoke(() =>
+                {
+                    var vm = _services.GetRequiredService<SettingsViewModel>();
+                    vm.InitialPage = "general";
+                    var settingsWindow = new SettingsWindow(vm);
+                    settingsWindow.ShowDialog();
+                });
             };
             
-            var exitItem = new MenuItem { Header = "Exit" };
-            exitItem.Click += (s, e) =>
+            var exitItem = new Forms.ToolStripMenuItem("Exit");
+            exitItem.Click += (_, _) =>
             {
-                Shutdown();
+                Dispatcher.Invoke(Shutdown);
             };
             
-            var settingsMenuItem = new MenuItem { Header = "Settings" };
-            settingsMenuItem.Items.Add(providersItem);
-            settingsMenuItem.Items.Add(generalItem);
+            var settingsMenuItem = new Forms.ToolStripMenuItem("Settings");
+            settingsMenuItem.DropDownItems.Add(providersItem);
+            settingsMenuItem.DropDownItems.Add(generalItem);
             
             contextMenu.Items.Add(showItem);
             contextMenu.Items.Add(settingsMenuItem);
-            contextMenu.Items.Add(new Separator());
+            contextMenu.Items.Add(new Forms.ToolStripSeparator());
             contextMenu.Items.Add(exitItem);
             
-            _trayIcon.ContextMenu = contextMenu;
+            _trayIcon.ContextMenuStrip = contextMenu;
             
-            _trayIcon.DoubleClickCommand = new RelayCommand(() =>
+            _trayIcon.DoubleClick += (_, _) =>
             {
-                var mainWindow = _services.GetRequiredService<MainWindow>();
-                mainWindow.ShowAndActivate();
-            });
-            
-            _trayIcon.ForceCreate();
+                Dispatcher.Invoke(() =>
+                {
+                    var mainWindow = _services.GetRequiredService<MainWindow>();
+                    mainWindow.ShowAndActivate();
+                });
+            };
+        }
+
+        private static Icon LoadTrayIcon()
+        {
+            var resource = Application.GetResourceStream(new Uri("pack://application:,,,/Resources/Icons/houmao.ico"));
+            if (resource?.Stream is null)
+                throw new FileNotFoundException("Tray icon resource not found.");
+
+            using var stream = resource.Stream;
+            using var memory = new MemoryStream();
+            stream.CopyTo(memory);
+            memory.Position = 0;
+            return new Icon(memory);
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
+            if (_trayIcon is not null)
+            {
+                _trayIcon.Visible = false;
+            }
             _trayIcon?.Dispose();
             _services?.Dispose();
             base.OnExit(e);
